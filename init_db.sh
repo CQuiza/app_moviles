@@ -1,2 +1,2 @@
 #/bin/bash
-docker exec api_app_moviles_app_moviles_1 sh -c "./initdb.sh"
+docker exec api_app_moviles-app_moviles-1 sh -c "./initdb.sh"

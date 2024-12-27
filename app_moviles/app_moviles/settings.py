@@ -160,3 +160,8 @@ REST_FRAMEWORK = {
     #     'rest_framework.renderers.JSONRenderer',         # Renderizador JSON normal
     # ], # desde la linea 158 a 161 no son por defecto
 }
+
+# Añade estas configuraciones al final de settings.py
+MEDIA_URL = '/media/'  # URL base para servir archivos multimedia
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Carpeta donde se almacenarán los archivos
+

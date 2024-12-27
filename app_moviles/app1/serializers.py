@@ -1,56 +1,33 @@
-from rest_framework import serializers # para crear las clases
-from rest_framework_gis.serializers import GeoFeatureModelSerializer
-# from django.contrib.auth.models import User # para manejar usuarios con django
-from .models import Especies_app # importar el modelo de la app1
+from rest_framework import serializers  # Importamos el módulo serializers para crear las clases de serialización
+from rest_framework_gis.serializers import GeoFeatureModelSerializer  # Importamos el serializador para manejar datos geoespaciales
+# from django.contrib.auth.models import User  # Importamos el modelo User para manejar usuarios con Django
+from .models import Especies_app, Reporte_app, Usuario_app, Reporte_especies_app  # Importamos los modelos de la aplicación app1
 
-
-# class UserSerializer(serializers.ModelSerializer):
-#     password = serializers.CharField(write_only=True)
-#     email = serializers.EmailField(required=True)
-
-#     class Meta:
-#         model = User
-#         fields = ['id', 'username', 'email', 'password', 'first_name', 'last_name']
-
-#     def create(self, validated_data):
-#         user = User(
-#             username=validated_data['username'],
-#             email=validated_data['email']
-#         )
-#         user.set_password(validated_data['password'])
-#         user.save()
-#         return user
-
-
-# class OwnersSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Owners
-#         fields = '__all__'
-
-# class MunicipalitySerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Municipality
-#         fields = '__all__'
-
-class EspeciesSerializer(GeoFeatureModelSerializer):
+class EspeciesSerializer(GeoFeatureModelSerializer):  # Serializador para el modelo Especies_app
     class Meta:
-        model = Especies_app
+        model = Especies_app  # Especificamos el modelo a usar
         
-        geo_field = 'geom_wkt'
-        id_field = False
-        fields = ('gid', 'fid', 'cuadricula', 'grupo', 'genero', 'especie', 'nombre_cientifico', 'nombre_comun', 'dimensiones', 'habitat', 'estado_conservacion', 'importancia_ecologica', 'como_reconocerlo', 'imagen')
+        geo_field = 'geom_wkt'  # Campo geoespacial a utilizar
+        id_field = False  # No incluir el campo ID
+        fields = ('gid', 'fid', 'cuadricula', 'grupo', 'genero', 'especie', 'nombre_cientifico', 'nombre_comun', 'dimensiones', 'habitat', 'estado_conservacion', 'importancia_ecologica', 'como_reconocerlo', 'imagen')  # Campos a incluir en el serializador
 
-# # class DeptosSerializer(serializers.ModelSerializer):
-# #     class Meta:
-# #         model = Deptos
-# #         fields = '__all__'
+class ReporteSerializer(GeoFeatureModelSerializer):  # Serializador para el modelo Reporte_app
 
-# # class MpiosSerializer(serializers.ModelSerializer):
-# #     class Meta:
-# #         model = Mpios
-# #         fields = '__all__'
+    class Meta:
+        model = Reporte_app  # Especificamos el modelo a usar
 
-# class PartySerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Party
-#         fields = '__all__'
+        geo_field = 'geom_wkt'  # Campo geoespacial a utilizar
+        id_field = False  # No incluir el campo ID
+        fields = ('gid', 'asunto', 'reporte', 'imagen', 'verificado', 'especie_gid')  # Campos a incluir en el serializador
+
+class UsuarioSerializer(serializers.ModelSerializer):  # Serializador para el modelo Usuario_app
+
+    class Meta:
+        model = Usuario_app  # Especificamos el modelo a usar
+        fields = ('id', 'nombre', 'correo_electronico')  # Campos a incluir en el serializador
+
+class ReporteEspecieSerializer(serializers.ModelSerializer):  # Serializador para el modelo Reporte_especies_app
+
+    class Meta:
+        model = Reporte_especies_app  # Especificamos el modelo a usar
+        fields = ('id', 'especie', 'reporte', 'usuario')  # Campos a incluir en el serializador
